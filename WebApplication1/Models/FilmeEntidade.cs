@@ -6,9 +6,11 @@
     public string Sinopse { get; set; }
     public string CaminhoPoster { get; set; }
     public double MediaVotos { get; set; }
+    public List<GeneroEntidade> Generos { get; set; }
 }
-public List<GeneroEntidade> Generos { get; set; } } public class GeneroEntidade
-{
+
+public class GeneroEntidade 
+{ 
     public int Id { get; set; }
     public string Nome { get; set; }
 }
