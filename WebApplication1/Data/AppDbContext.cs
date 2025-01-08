@@ -1,20 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebApplication1.Models;
 
-namespace MeuWebApp.Data
+public class AplicacaoDbContext : DbContext
 {
-    public class AppDbContext : DbContext
+    public AplicacaoDbContext(DbContextOptions<AplicacaoDbContext> options)
+        : base(options)
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options)
-            : base(options)
-        {
-        }
-
-        public DbSet<Produto> Produtos { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            // Configurações de modelo aqui, se necessário
-        }
     }
+
+    public DbSet<FilmeEntidade> Filmes { get; set; }
+    public DbSet<GeneroEntidade> Generos { get; set; }
 }

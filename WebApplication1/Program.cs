@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using MeuWebApp.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 // Configura o PostgreSQL
-builder.Services.AddEntityFrameworkNpgsql().AddDbContext<AppDbContext>(options =>
+builder.Services.AddEntityFrameworkNpgsql().AddDbContext<AplicacaoDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Configura a sessão se precisar
