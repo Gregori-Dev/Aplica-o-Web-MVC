@@ -3,7 +3,7 @@
 
 @{
     ViewBag.Title = @Model.Title;
-    Layout = null; // Manter o layout como null para este exemplo específico
+    Layout = null;
 }
 
 <!DOCTYPE html>
@@ -18,31 +18,65 @@
 <body>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="@Url.Action("Index", "Filmes")">Início</a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="navbar-brand" href="@Url.Action("Index", "Filmes")">Início</a>
+                </li>
+                <li class="nav-item">
+                    <a class="navbar-brand" href="@Url.Action("FilmesSalvos", "Filmes")">Filmes Salvos</a>
+                </li>
+            </ul>
         </div>
     </nav>
 
     <div class="container mt-4">
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+        }
+
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+        }
+
         <div class="row">
             <div class="col-md-4">
-                <img src="https://image.tmdb.org/t/p/w500/@Model.PosterPath" alt="@Model.Title poster" class="img-fluid" />
+                <img src="https://image.tmdb.org/t/p/w500/@Model?.PosterPath" alt="@Model?.Title poster" class="img-fluid" />
             </div>
             <div class="col-md-8">
-                <h2>@Model.Title</h2>
-                <p><strong>Lançamento:</strong> @Model.ReleaseDate</p>
-                <p><strong>Sinopse:</strong> @Model.Overview</p>
-                <p><strong>Média de Votos:</strong> @Model.VoteAverage</p>
+                <h2>@Model?.Title ?? "Título Indisponível"</h2>
+                <p><strong>Lançamento:</strong> @Model?.ReleaseDate ?? "Data de lançamento indisponível"</p>
+                <p><strong>Sinopse:</strong> @Model?.Overview ?? "Sinopse indisponível"</p>
+                <p><strong>Média de Votos:</strong> @Model?.VoteAverage ?? "N/A"</p>
                 <p>
                     <strong>Gêneros:</strong>
-                    @foreach (var genre in Model.Genres)
+                    @if (Model?.Genres != null)
                     {
-                        @genre.Name
+                        @foreach (var genre in Model.Genres)
+                        {
+                            @genre.Name
+                        }
+                    }
+                    else
+                    {
+                        <span>Gêneros indisponíveis</span>
                     }
                 </p>
+                <form asp-action="SalvarFilme" method="post">
+                    <input type="hidden" name="Id" value="@Model.Id" />
+                    <input type="hidden" name="Title" value="@Model.Title" />
+                    <input type="hidden" name="ReleaseDate" value="@Model.ReleaseDate" />
+                    <input type="hidden" name="Overview" value="@Model.Overview" />
+                    <input type="hidden" name="PosterPath" value="@Model.PosterPath" />
+                    <input type="hidden" name="VoteAverage" value="@Model.VoteAverage" />
+                    <input type="hidden" name="Genres" value="@Model.Genres" />
+                    <button type="submit" class="btn btn-primary">Salvar Filme</button>
+                </form>
             </div>
         </div>
     </div>
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

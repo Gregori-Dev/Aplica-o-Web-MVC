@@ -1,13 +1,15 @@
 ﻿using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
 
 public class TMDbClient
 {
-    private static readonly HttpClient client = new HttpClient();
+    private readonly HttpClient _httpClient;
     private const string apiKey = "f46f677dacac1ef7e32a77eaefd8d181";
+
+    public TMDbClient(HttpClient httpClient)
+    {
+        _httpClient = httpClient;
+    }
 
     public async Task<(bool IsSuccess, string ErrorMessage, Filme Filme)> ObterFilme(int filmeId)
     {
@@ -15,10 +17,10 @@ public class TMDbClient
 
         try
         {
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            HttpResponseMessage response = await client.GetAsync(requestUrl);
+            HttpResponseMessage response = await _httpClient.GetAsync(requestUrl);
             if (response.IsSuccessStatusCode)
             {
                 var responseData = await response.Content.ReadAsStringAsync();
@@ -42,10 +44,10 @@ public class TMDbClient
 
         try
         {
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            HttpResponseMessage response = await client.GetAsync(requestUrl);
+            HttpResponseMessage response = await _httpClient.GetAsync(requestUrl);
             if (response.IsSuccessStatusCode)
             {
                 var responseData = await response.Content.ReadAsStringAsync();
