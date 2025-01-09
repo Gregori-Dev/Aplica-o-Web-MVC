@@ -3,10 +3,12 @@
 public class FilmesController : Controller
 {
     private readonly TMDbClient _tmdbClient;
+    private readonly FilmeServico _filmeServico;
 
-    public FilmesController()
+    public FilmesController(TMDbClient tmdbClient, FilmeServico filmeServico)
     {
-        _tmdbClient = new TMDbClient();
+        _tmdbClient = tmdbClient;
+        _filmeServico = filmeServico;
     }
 
     [Route("filmes")]
@@ -43,6 +45,36 @@ public class FilmesController : Controller
         catch (Exception e)
         {
             ViewBag.ErrorMessage = $"Erro ao obter detalhes do filme: {e.Message}";
+            return View("Error");
+        }
+    }
+
+    [HttpPost, Route("filmes/salvarfilme")]
+    public async Task<IActionResult> SalvarFilme(Filme filme)
+    {
+        try
+        {
+            await _filmeServico.SalvarFilme(filme); 
+            TempData["SuccessMessage"] = "Filme salvo com sucesso!";
+            return RedirectToAction("Index");
+        }
+        catch (Exception e)
+        {
+            ViewBag.ErrorMessage = $"Erro ao salvar o filme: {e.Message}";
+            return View("Details", filme);
+        }
+    }
+
+    public async Task<IActionResult> FilmesSalvos()
+    {
+        try
+        {
+            var filmes = await _filmeServico.ObterFilmesSalvos();
+            return View("FilmeSalvos", filmes);
+        }
+        catch (Exception e)
+        {
+            ViewBag.ErrorMessage = $"Erro ao obter filmes salvos: {e.Message}";
             return View("Error");
         }
     }

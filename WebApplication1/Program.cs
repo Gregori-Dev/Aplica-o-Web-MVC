@@ -2,14 +2,11 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Adiciona serviços ao container
 builder.Services.AddControllersWithViews();
 
-// Configura o PostgreSQL
 builder.Services.AddEntityFrameworkNpgsql().AddDbContext<AplicacaoDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Configura a sessão se precisar
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -17,11 +14,16 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+builder.Services.AddHttpClient();
+
+builder.Services.AddTransient<TMDbClient>();
+builder.Services.AddScoped<FilmeServico>();
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/Filmes/Error");
     app.UseHsts();
 }
 
@@ -32,6 +34,6 @@ app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Filmes}/{action=Index}/{id?}");
 
 app.Run();
