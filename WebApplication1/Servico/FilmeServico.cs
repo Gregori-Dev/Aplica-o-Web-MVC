@@ -26,7 +26,9 @@ public class FilmeServico
                 Generos = filme.Genres?.Select(g => new GeneroEntidade { Id = g.Id, Nome = g.Name }).ToList() ?? new List<GeneroEntidade>()
             };
 
-            _contexto.Filmes.Add(filmeEntidade);
+            bool jaExiste = await _contexto.Filmes.AnyAsync(f => f.Id == filmeEntidade.Id);
+
+            SalvarFilmesSomenteSe(filmeEntidade, jaExiste);
             await _contexto.SaveChangesAsync();
         }
         catch (DbUpdateException dbEx)
@@ -39,6 +41,15 @@ public class FilmeServico
             Console.WriteLine($"Erro ao salvar o filme: {innerException.Message}");
             throw;
         }
+    }
+
+    private void SalvarFilmesSomenteSe(FilmeEntidade filmeEntidade, bool jaExiste)
+    {
+        if (jaExiste)        
+            _contexto.Filmes.Update(filmeEntidade);
+        
+        else        
+            _contexto.Filmes.Add(filmeEntidade);       
     }
 
     public async Task<List<FilmeEntidade>> ObterFilmesSalvos()
