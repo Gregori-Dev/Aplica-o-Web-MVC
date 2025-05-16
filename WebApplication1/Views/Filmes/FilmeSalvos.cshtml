@@ -61,7 +61,7 @@
 @functions {
     public async Task<string> ObterPosterPath(int filmeId)
     {
-        var tmdbClient = new TMDbClient(new HttpClient());
+        var tmdbClient = new TMDBClientServico(new HttpClient());
         var result = await tmdbClient.ObterFilme(filmeId);
         return result.Filme.PosterPath;
     }

@@ -2,10 +2,10 @@
 
 public class FilmesController : Controller
 {
-    private readonly TMDbClient _tmdbClient;
+    private readonly TMDBClientServico _tmdbClient;
     private readonly FilmeServico _filmeServico;
 
-    public FilmesController(TMDbClient tmdbClient, FilmeServico filmeServico)
+    public FilmesController(TMDBClientServico tmdbClient, FilmeServico filmeServico)
     {
         _tmdbClient = tmdbClient;
         _filmeServico = filmeServico;

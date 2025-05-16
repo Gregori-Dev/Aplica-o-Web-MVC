@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json;
 using System.Net.Http.Headers;
 
-public class TMDbClient
+public class TMDBClientServico
 {
     private readonly HttpClient _httpClient;
     private const string apiKey = "f46f677dacac1ef7e32a77eaefd8d181";
 
-    public TMDbClient(HttpClient httpClient)
+    public TMDBClientServico(HttpClient httpClient)
     {
         _httpClient = httpClient;
     }
