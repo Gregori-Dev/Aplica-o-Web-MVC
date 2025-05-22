@@ -3,10 +3,10 @@
 public class FilmeServico
 {
     private readonly AplicacaoDbContext _contexto;
-    private readonly TMDbClient _tmdbClient;
+    private readonly TMDBClientServico _tmdbClient;
 
     public FilmeServico(AplicacaoDbContext contexto,
-                        TMDbClient tmdbClient)
+                        TMDBClientServico tmdbClient)
     {
         _contexto = contexto;
         _tmdbClient = tmdbClient;

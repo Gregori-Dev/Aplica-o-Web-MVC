@@ -1,7 +1,13 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using WebApplication1.Core.Intefaces;
+using WebApplication1.Infra.Autenticação;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add services
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddEntityFrameworkNpgsql().AddDbContext<AplicacaoDbContext>(options =>
@@ -15,12 +21,33 @@ builder.Services.AddSession(options =>
 });
 
 builder.Services.AddHttpClient();
-
-builder.Services.AddTransient<TMDbClient>();
+builder.Services.AddTransient<TMDBClientServico>();
 builder.Services.AddScoped<FilmeServico>();
+
+builder.Services.Configure<JwtConfiguracao>(builder.Configuration.GetSection("ConfiguracaoJwt"));
+builder.Services.AddScoped<IAutenticacaoServico, AutenticacaoServico>();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        var config = builder.Configuration.GetSection("ConfiguracaoJwt").Get<JwtConfiguracao>();
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = config.Emissor,
+            ValidAudience = config.Publico,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config.Senha))
+        };
+    });
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
+// Pipeline
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Filmes/Error");
@@ -29,7 +56,11 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
 app.UseRouting();
+
+app.UseAuthentication(); // << adicionado
+app.UseAuthorization();  // << adicionado
 app.UseSession();
 
 app.MapControllerRoute(
