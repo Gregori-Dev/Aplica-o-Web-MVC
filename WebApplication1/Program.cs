@@ -25,7 +25,7 @@ builder.Services.AddTransient<TMDBClientServico>();
 builder.Services.AddScoped<FilmeServico>();
 
 builder.Services.Configure<JwtConfiguracao>(builder.Configuration.GetSection("ConfiguracaoJwt"));
-builder.Services.AddScoped<IServicoAutenticacao, AutenticacaoServico>();
+builder.Services.AddScoped<IAutenticacaoServico, AutenticacaoServico>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

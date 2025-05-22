@@ -7,7 +7,7 @@ using WebApplication1.Core.Entidades;
 using WebApplication1.Core.Intefaces;
 using WebApplication1.Infra.Autenticação;
 
-public class AutenticacaoServico : IServicoAutenticacao
+public class AutenticacaoServico : IAutenticacaoServico
 {
     private readonly JwtConfiguracao _jwtConfiguracao;
 

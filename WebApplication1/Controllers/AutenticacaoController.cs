@@ -8,9 +8,9 @@ namespace WebApplication.Controllers
     [ApiController]
     public class AutenticacaoController : ControllerBase
     {
-        private readonly IServicoAutenticacao _servico;
+        private readonly IAutenticacaoServico _servico;
 
-        public AutenticacaoController(IServicoAutenticacao servico)
+        public AutenticacaoController(IAutenticacaoServico servico)
         {
             _servico = servico;
         }
