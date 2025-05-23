@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Core.Entidades;
-using WebApplication1.Core.Intefaces;
+﻿using AplicacaoWebFilmes.Core.Entidades;
+using AplicacaoWebFilmes.Core.Intefaces;
+using Microsoft.AspNetCore.Mvc;
 
-namespace WebApplication.Controllers
+namespace AplicacaoWebFilmes.Controllers
 {
     [Route("api/autenticacao")]
     [ApiController]

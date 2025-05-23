@@ -1,4 +1,4 @@
-﻿namespace WebApplication1.Core.Entidades
+﻿namespace AplicacaoWebFilmes.Core.Entidades
 {
     public class Usuario
     {

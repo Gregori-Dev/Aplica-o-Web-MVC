@@ -1,11 +1,11 @@
-﻿using Microsoft.Extensions.Options;
+﻿using AplicacaoWebFilmes.Core.Entidades;
+using AplicacaoWebFilmes.Core.Intefaces;
+using AplicacaoWebFilmes.Infra.Autenticação;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using WebApplication1.Core.Entidades;
-using WebApplication1.Core.Intefaces;
-using WebApplication1.Infra.Autenticação;
 
 public class AutenticacaoServico : IAutenticacaoServico
 {

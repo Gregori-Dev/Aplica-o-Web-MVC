@@ -1,4 +1,4 @@
-namespace WebApplication1.Core.Models
+namespace AplicacaoWebFilmes.Core.Entidades
 {
     public class ErrorViewModel
     {

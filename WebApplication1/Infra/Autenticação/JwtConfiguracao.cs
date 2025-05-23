@@ -1,4 +1,4 @@
-﻿namespace WebApplication1.Infra.Autenticação
+﻿namespace WebApplication.Infra.Autenticação
 {
     public class JwtConfiguracao
     {

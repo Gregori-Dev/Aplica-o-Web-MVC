@@ -1,6 +1,6 @@
-﻿using WebApplication1.Core.Entidades;
+﻿using AplicacaoWebFilmes.Core.Entidades;
 
-namespace WebApplication1.Core.Intefaces
+namespace AplicacaoWebFilmes.Core.Intefaces
 {
     public interface IAutenticacaoServico
     {

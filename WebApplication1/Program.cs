@@ -2,8 +2,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using WebApplication1.Core.Intefaces;
-using WebApplication1.Infra.Autenticação;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Hosting;
+using AplicacaoWebFilmes.Infra.Autenticação;
+using AplicacaoWebFilmes.Core.Intefaces;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
