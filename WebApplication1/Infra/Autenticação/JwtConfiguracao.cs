@@ -1,4 +1,4 @@
-﻿namespace WebApplication.Infra.Autenticação
+﻿namespace AplicacaoWebFilmes.Infra.Autenticação
 {
     public class JwtConfiguracao
     {
