@@ -1,16 +1,13 @@
+using Application.Intefaces;
+using Infra.Autenticação;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Hosting;
-using AplicacaoWebFilmes.Infra.Autenticação;
-using AplicacaoWebFilmes.Core.Intefaces;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddEntityFrameworkNpgsql().AddDbContext<AplicacaoDbContext>(options =>
@@ -25,7 +22,7 @@ builder.Services.AddSession(options =>
 
 builder.Services.AddHttpClient();
 builder.Services.AddTransient<TMDBClientServico>();
-builder.Services.AddScoped<FilmeServico>();
+builder.Services.AddScoped<FilmeRepository>();
 
 builder.Services.Configure<JwtConfiguracao>(builder.Configuration.GetSection("ConfiguracaoJwt"));
 builder.Services.AddScoped<IAutenticacaoServico, AutenticacaoServico>();
@@ -50,20 +47,19 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-// Pipeline
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Filmes/Error");
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication(); // << adicionado
-app.UseAuthorization();  // << adicionado
+app.UseAuthentication(); 
+app.UseAuthorization();  
 app.UseSession();
 
 app.MapControllerRoute(

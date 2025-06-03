@@ -1,6 +1,6 @@
-﻿using AplicacaoWebFilmes.Core.Entidades;
+﻿using Domain.Entidades;
 
-namespace AplicacaoWebFilmes.Core.Intefaces
+namespace Application.Intefaces
 {
     public interface IAutenticacaoServico
     {

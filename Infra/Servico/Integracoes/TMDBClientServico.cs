@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Domain.Entidades;
+using Newtonsoft.Json;
 using System.Net.Http.Headers;
 
 public class TMDBClientServico
@@ -61,7 +62,7 @@ public class TMDBClientServico
         }
         catch (Exception e)
         {
-            return new List<Filme> { new Filme { Title = $"Erro desconhecido: {e.Message}" } };
+            return new List<Filme> { new Filme { Titulo = $"Erro desconhecido: {e.Message}" } };
         }
     }
 

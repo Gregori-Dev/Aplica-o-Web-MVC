@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Domain.Entidades;
+using Microsoft.AspNetCore.Mvc;
 
 public class FilmesController : Controller
 {
     private readonly TMDBClientServico _tmdbClient;
-    private readonly FilmeServico _filmeServico;
+    private readonly FilmeRepository _filmeServico;
 
-    public FilmesController(TMDBClientServico tmdbClient, FilmeServico filmeServico)
+    public FilmesController(TMDBClientServico tmdbClient, FilmeRepository filmeServico)
     {
         _tmdbClient = tmdbClient;
         _filmeServico = filmeServico;

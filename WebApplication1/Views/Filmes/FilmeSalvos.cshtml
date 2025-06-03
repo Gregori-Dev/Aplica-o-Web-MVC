@@ -1,4 +1,5 @@
-﻿@model IEnumerable<FilmeEntidade>
+﻿@using Domain.Entidades
+@model IEnumerable<Filme>
 
 @{
     ViewBag.Title = "Filmes Salvos";
@@ -42,7 +43,7 @@
                             <p><strong>Média de Votos:</strong> @filme.MediaVotos</p>
                             <p>
                                 <strong>Gêneros:</strong>
-                                @foreach (var genero in filme.Generos)
+                                @foreach (var genero in filme.Genero)
                                 {
                                     @genero.Nome
                                 }
@@ -63,6 +64,6 @@
     {
         var tmdbClient = new TMDBClientServico(new HttpClient());
         var result = await tmdbClient.ObterFilme(filmeId);
-        return result.Filme.PosterPath;
+        return result.Filme.CaminhoPoster;
     }
 }
