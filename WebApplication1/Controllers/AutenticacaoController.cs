@@ -1,5 +1,5 @@
-﻿using AplicacaoWebFilmes.Core.Entidades;
-using AplicacaoWebFilmes.Core.Intefaces;
+﻿using Application.Intefaces;
+using Domain.Entidades;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AplicacaoWebFilmes.Controllers

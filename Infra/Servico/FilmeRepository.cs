@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Entidades;
+using Microsoft.EntityFrameworkCore;
 
-public class FilmeServico
+public class FilmeRepository
 {
     private readonly AplicacaoDbContext _contexto;
     private readonly TMDBClientServico _tmdbClient;
 
-    public FilmeServico(AplicacaoDbContext contexto,
+    public FilmeRepository(AplicacaoDbContext contexto,
                         TMDBClientServico tmdbClient)
     {
         _contexto = contexto;
@@ -16,14 +17,14 @@ public class FilmeServico
     {
         try
         {
-            var filmeEntidade = new FilmeEntidade
+            var filmeEntidade = new Filme
             {
                 Id = filme.Id,
-                Titulo = filme.Title,
-                DataLancamento = filme.ReleaseDate,
-                Sinopse = filme.Overview,
-                MediaVotos = filme.VoteAverage,
-                Generos = filme.Genres?.Select(g => new GeneroEntidade { Id = g.Id, Nome = g.Name }).ToList() ?? new List<GeneroEntidade>()
+                Titulo = filme.Titulo,
+                DataLancamento = filme.DataLancamento,
+                Sinopse = filme.Sinopse,
+                MediaVotos = filme.MediaVotos,
+                Genero = filme.Genero?.Select(g => new Genero { Id = g.Id, Nome = g.Nome }).ToList() ?? new List<Genero>()
             };
 
             bool jaExiste = await _contexto.Filmes.AnyAsync(f => f.Id == filmeEntidade.Id);
@@ -43,7 +44,7 @@ public class FilmeServico
         }
     }
 
-    private void SalvarFilmesSomenteSe(FilmeEntidade filmeEntidade, bool jaExiste)
+    private void SalvarFilmesSomenteSe(Filme filmeEntidade, bool jaExiste)
     {
         if (jaExiste)        
             _contexto.Filmes.Update(filmeEntidade);
@@ -52,14 +53,14 @@ public class FilmeServico
             _contexto.Filmes.Add(filmeEntidade);       
     }
 
-    public async Task<List<FilmeEntidade>> ObterFilmesSalvos()
+    public async Task<List<Filme>> ObterFilmesSalvos()
     {
-        return await _contexto.Filmes.Include(f => f.Generos).ToListAsync();
+        return await _contexto.Filmes.Include(f => f.Genero).ToListAsync();
     }
 
     public async Task<string> ObterPosterDoFilmeFavorito(int filmeId)
     {
         var filme = await _tmdbClient.ObterFilme(filmeId);
-        return filme.IsSuccess ? filme.Filme.PosterPath : string.Empty;
+        return filme.IsSuccess ? filme.Filme.CaminhoPoster : string.Empty;
     }
 }

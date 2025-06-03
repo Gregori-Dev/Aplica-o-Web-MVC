@@ -1,6 +1,6 @@
-﻿using AplicacaoWebFilmes.Core.Entidades;
-using AplicacaoWebFilmes.Core.Intefaces;
-using AplicacaoWebFilmes.Infra.Autenticação;
+﻿using Application.Intefaces;
+using Domain.Entidades;
+using Infra.Autenticação;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;

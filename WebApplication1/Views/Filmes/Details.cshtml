@@ -1,8 +1,9 @@
-﻿<!-- Views/Filmes/Details.cshtml -->
+﻿@using Domain.Entidades
+<!-- Views/Filmes/Details.cshtml -->
 @model Filme
 
 @{
-    ViewBag.Title = @Model.Title;
+    ViewBag.Title = @Model.Titulo;
     Layout = null;
 }
 
@@ -42,20 +43,20 @@
 
         <div class="row">
             <div class="col-md-4">
-                <img src="https://image.tmdb.org/t/p/w500/@Model?.PosterPath" alt="@Model?.Title poster" class="img-fluid" />
+                <img src="https://image.tmdb.org/t/p/w500/@Model?.CaminhoPoster" alt="@Model?.Titulo poster" class="img-fluid" />
             </div>
             <div class="col-md-8">
-                <h2>@Model?.Title ?? "Título Indisponível"</h2>
-                <p><strong>Lançamento:</strong> @Model?.ReleaseDate ?? "Data de lançamento indisponível"</p>
-                <p><strong>Sinopse:</strong> @Model?.Overview ?? "Sinopse indisponível"</p>
-                <p><strong>Média de Votos:</strong> @Model?.VoteAverage ?? "N/A"</p>
+                <h2>@Model?.Titulo ?? "Título Indisponível"</h2>
+                <p><strong>Lançamento:</strong> @Model?.DataLancamento ?? "Data de lançamento indisponível"</p>
+                <p><strong>Sinopse:</strong> @Model?.Sinopse ?? "Sinopse indisponível"</p>
+                <p><strong>Média de Votos:</strong> @Model?.MediaVotos ?? "N/A"</p>
                 <p>
                     <strong>Gêneros:</strong>
-                    @if (Model?.Genres != null)
+                    @if (Model?.Genero != null)
                     {
-                        @foreach (var genre in Model.Genres)
+                        @foreach (var genre in Model.Genero)
                         {
-                            @genre.Name
+                            @genre.Nome
                         }
                     }
                     else
@@ -65,12 +66,12 @@
                 </p>
                 <form asp-action="SalvarFilme" method="post">
                     <input type="hidden" name="Id" value="@Model.Id" />
-                    <input type="hidden" name="Title" value="@Model.Title" />
-                    <input type="hidden" name="ReleaseDate" value="@Model.ReleaseDate" />
-                    <input type="hidden" name="Overview" value="@Model.Overview" />
-                    <input type="hidden" name="PosterPath" value="@Model.PosterPath" />
-                    <input type="hidden" name="VoteAverage" value="@Model.VoteAverage" />
-                    <input type="hidden" name="Genres" value="@Model.Genres" />
+                    <input type="hidden" name="Title" value="@Model.Titulo" />
+                    <input type="hidden" name="ReleaseDate" value="@Model.DataLancamento" />
+                    <input type="hidden" name="Overview" value="@Model.Sinopse" />
+                    <input type="hidden" name="PosterPath" value="@Model.CaminhoPoster" />
+                    <input type="hidden" name="VoteAverage" value="@Model.MediaVotos" />
+                    <input type="hidden" name="Genres" value="@Model.Genero" />
                     <button type="submit" class="btn btn-primary">Salvar Filme</button>
                 </form>
             </div>

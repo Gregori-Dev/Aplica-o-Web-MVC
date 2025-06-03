@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Entidades;
+using Microsoft.EntityFrameworkCore;
 
 public class AplicacaoDbContext : DbContext
 {
@@ -7,18 +8,18 @@ public class AplicacaoDbContext : DbContext
     {
     }
 
-    public DbSet<FilmeEntidade> Filmes { get; set; }
-    public DbSet<GeneroEntidade> Generos { get; set; }
+    public DbSet<Filme> Filmes { get; set; }
+    public DbSet<Genero> Generos { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<FilmeEntidade>()
-            .HasMany(f => f.Generos)
+        modelBuilder.Entity<Filme>()
+            .HasMany(f => f.Genero)
             .WithOne()
             .HasForeignKey("FilmeId")
             .OnDelete(DeleteBehavior.Cascade);
 
-        modelBuilder.Entity<GeneroEntidade>()
+        modelBuilder.Entity<Genero>()
             .HasKey(g => g.Id);
     }
 }
